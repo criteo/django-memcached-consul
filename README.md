@@ -1,0 +1,1 @@
+# django-memcached-consul
