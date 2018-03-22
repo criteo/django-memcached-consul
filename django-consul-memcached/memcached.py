@@ -9,7 +9,7 @@ import logging
 
 def get_servers(params):
     """Get the list of cache servers either from cache or directly from Consul."""
-    consul_cache = caches['consul-memcached']
+    consul_cache = caches[params['CONSUL_CACHE']]
 
     cache_key = params["CONSUL_SERVICE"]
     alt_cache_key = "alt:%s" % params["CONSUL_SERVICE"]

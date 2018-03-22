@@ -24,8 +24,8 @@ will be issued every time we use the cache.
 Django-memcached-consul use two layer of cache: the first layer should be short lived (`CONSUL_TTL`)
 and is used to cache the list of memcached servers and is retrieved everytime we use the
 django-consul-memcached driver. The second one is long lived (`CONSUL_TTL_ALT`) and retrieved when
-Consul API is unreachable. The cache used is named `consul-memcached` and should be preferably
-a filebased cache to be shared accross all workers.
+Consul API is unreachable. The name of the cache to be used is set in `CONSUL_CACHE` and the cache
+should be preferably a filebased cache to be shared accross all workers.
 
 ## Example
 
@@ -37,6 +37,7 @@ CACHES = {
         'CONSUL_TTL': 60,
         # Alt cache will be used if consul is unreachable
         'CONSUL_ALT_TTL': 3600,
+        'CONSUL_CACHE': 'consul-memcached',
         'CONSUL_HOST': 'consul.organization.com',
         'CONSUL_PORT': 8500,
         'CONSUL_SERVICE': 'memcached-service',
