@@ -1,1 +1,2 @@
 python-consul
+django<2.0

@@ -16,6 +16,8 @@ import os
 import setuptools
 
 
+os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
+
 def _read(relpath):
     fullpath = os.path.join(os.path.dirname(__file__), relpath)
     with open(fullpath) as f:

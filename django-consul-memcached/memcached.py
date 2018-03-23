@@ -22,7 +22,7 @@ def get_servers(params):
             servers = get_servers_list_from_consul(params)
             consul_cache.set(cache_key, servers, params["CONSUL_TTL"])
             consul_cache.set(alt_cache_key, servers, params["CONSUL_ALT_TTL"])
-        except(requests.exceptions.ConnectionError) as e:
+        except(requests.exceptions.ConnectionError):
             logging.warning("Cannot connect to Consul")
             alt_cached = consul_cache.get(alt_cache_key)
             if alt_cached:
@@ -35,10 +35,10 @@ def get_servers(params):
 def get_servers_list_from_consul(params):
     """Get the list of cache servers using Consul."""
     servers = []
-    consul_api = consul.Consul(host=params["CONSUL_HOST"],port=params["CONSUL_PORT"])
+    consul_api = consul.Consul(host=params["CONSUL_HOST"], port=params["CONSUL_PORT"])
     index, data = consul_api.health.service(service=params["CONSUL_SERVICE"], passing=True)
     for node in data:
-        servers.append("%s:%s" % (node["Node"]["Node"],node["Service"]["Port"]))
+        servers.append("%s:%s" % (node["Node"]["Node"], node["Service"]["Port"]))
     return servers
 
 
@@ -50,8 +50,6 @@ class BaseMemcachedCache(memcached.BaseMemcachedCache):
 
 
 class MemcachedCache(memcached.MemcachedCache):
-    "An implementation of a cache binding using python-memcached"
-
     def __init__(self, server, params):
         import memcache
         BaseMemcachedCache.__init__(
