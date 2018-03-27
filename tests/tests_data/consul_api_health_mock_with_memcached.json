@@ -1,0 +1,14 @@
+[
+  {
+    "Node": {
+      "ID": "1234567",
+      "Node": "localhost"
+    },
+    "Service": {
+      "ID": "memcached-mock-service",
+      "Service": "memcached-mock",
+      "Port": 11211
+    },
+    "Checks": []
+  }
+]

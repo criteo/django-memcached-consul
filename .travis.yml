@@ -17,6 +17,9 @@ install:
 script:
   - tox
 
+services:
+  - memcached
+
 sudo: required
 
 after_success:

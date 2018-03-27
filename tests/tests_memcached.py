@@ -31,14 +31,14 @@ class TestAll(unittest.TestCase):
     def test_cache(self):
         @all_requests
         def response_content(url, request):
-            content = get_file("consul_api_health_mock.json")
+            content = get_file("consul_api_health_mock_with_memcached.json")
             return response(200, content, CONSUL_HEADERS, None, 5, request)
 
         from django.core.cache import cache
         with HTTMock(response_content):
             cache.set("consul_memcache_test","test")
             # TODO: find a way to properly mock memcached
-            # self.assertEqual(cache.get("consul_memcache_test"),"test")
+            self.assertEqual(cache.get("consul_memcache_test"),"test")
 
 
 class TestStringMethods(unittest.TestCase):
