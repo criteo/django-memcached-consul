@@ -55,7 +55,6 @@ def get_servers_list_from_consul(params):
 class BaseMemcachedCache(memcached.BaseMemcachedCache):
     def __init__(self, server, params, library, value_not_found_exception):
         server = get_servers(params)
-        print(server)
         memcached.BaseMemcachedCache.__init__(
             self, server, params, library, value_not_found_exception)
 
