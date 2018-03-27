@@ -8,16 +8,16 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "tests.test_settings"
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
 CONSUL_HEADERS = {
-                  'content-type': 'application/json',
-                  'X-Consul-Index': 1234567,
-                  'X-Consul-Knownleader': True,
-                  'X-Consul-Lastcontact': 0
-                 }
+    'content-type': 'application/json',
+    'X-Consul-Index': 1234567,
+    'X-Consul-Knownleader': True,
+    'X-Consul-Lastcontact': 0
+}
 PARAMS = {
-            "CONSUL_HOST": "host",
-            "CONSUL_PORT": "123456",
-            "CONSUL_SERVICE": "memcached_service",
-        }
+    "CONSUL_HOST": "host",
+    "CONSUL_PORT": "123456",
+    "CONSUL_SERVICE": "memcached_service",
+}
 
 
 def get_file(filename):
@@ -27,8 +27,10 @@ def get_file(filename):
     file.close()
     return content
 
+
 class TestAll(unittest.TestCase):
     def test_cache(self):
+        """Test it's possible to use memcached with consul."""
         @all_requests
         def response_content(url, request):
             content = get_file("consul_api_health_mock_with_memcached.json")
@@ -36,41 +38,40 @@ class TestAll(unittest.TestCase):
 
         from django.core.cache import cache
         with HTTMock(response_content):
-            cache.set("consul_memcache_test","test")
+            cache.set("consul_memcache_test", "test")
             # TODO: find a way to properly mock memcached
-            self.assertEqual(cache.get("consul_memcache_test"),"test")
+            self.assertEqual(cache.get("consul_memcache_test"), "test")
 
 
 class TestStringMethods(unittest.TestCase):
     def test_get_servers_list_from_consul(self):
-        """Test that it's possible to get a list of servers from Consul"""
+        """Test that it's possible to get a list of servers from Consul."""
         @all_requests
         def response_content(url, request):
             content = get_file("consul_api_health_mock.json")
             return response(200, content, CONSUL_HEADERS, None, 5, request)
 
         with HTTMock(response_content):
-             self.assertEqual(memcached.get_servers_list_from_consul(PARAMS), ['memcached-mock-node1:80', 'memcached-mock-node2:80'])
-
+            self.assertEqual(memcached.get_servers_list_from_consul(PARAMS), [
+                             'memcached-mock-node1:80', 'memcached-mock-node2:80'])
 
     def test_get_servers_without_consul_cache(self):
-        """Test that it's possible to return servers list without using cache"""
+        """Test that it's possible to return servers list without using cache."""
         @all_requests
         def response_content(url, request):
             content = get_file("consul_api_health_mock.json")
             return response(200, content, CONSUL_HEADERS, None, 5, request)
 
         with HTTMock(response_content):
-              self.assertEqual(memcached.get_servers(PARAMS), ['memcached-mock-node1:80', 'memcached-mock-node2:80'])
-
+            self.assertEqual(memcached.get_servers(PARAMS), [
+                             'memcached-mock-node1:80', 'memcached-mock-node2:80'])
 
     def test_get_servers_fail_without_consul_cache(self):
-        """If consul fail without being cached, empty list should be returned"""
+        """If consul fail without being cached, empty list should be returned."""
         self.assertEqual(memcached.get_servers(PARAMS), [])
 
-
     def test_get_servers_with_consul_cache(self):
-        """If consul fail without being cached, empty list should be returned"""
+        """If consul fail without being cached, empty list should be returned."""
         params = PARAMS
         params["CONSUL_CACHE"] = "consul-memcached"
         params["CONSUL_TTL"] = 30

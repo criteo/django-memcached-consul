@@ -1,6 +1,5 @@
 from django.core.cache import caches
 from django.core.cache.backends import memcached
-from django.core.cache.backends import base
 
 
 import consul
