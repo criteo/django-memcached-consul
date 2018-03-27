@@ -48,3 +48,15 @@ CACHES = {
     }
 }
 ```
+
+## Testing
+
+Testing require memcached and tox.
+
+First you need to run memcached on default configuration (usually at localhost:11211) or you will
+have to change informations in `tests/tests_data/consul_api_health_mock_with_memcached.json`).
+
+Then you can run tox at the root of the project to start the tests:
+```
+tox
+```
