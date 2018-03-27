@@ -1,5 +1,6 @@
 from django.core.cache import caches
 from django.core.cache.backends import memcached
+from django.core.cache.backends import base
 
 
 import consul
@@ -9,26 +10,35 @@ import logging
 
 def get_servers(params):
     """Get the list of cache servers either from cache or directly from Consul."""
-    consul_cache = caches[params['CONSUL_CACHE']]
+    try:
+        consul_cache = caches[params['CONSUL_CACHE']]
+    except(KeyError):
+        consul_cache = False
 
     cache_key = params["CONSUL_SERVICE"]
     alt_cache_key = "alt:%s" % params["CONSUL_SERVICE"]
-    cached = consul_cache.get(cache_key)
+
+    if consul_cache:
+        cached = consul_cache.get(cache_key)
+    else:
+        cached = False
 
     if cached:
         return cached
     else:
         try:
             servers = get_servers_list_from_consul(params)
-            consul_cache.set(cache_key, servers, params["CONSUL_TTL"])
-            consul_cache.set(alt_cache_key, servers, params["CONSUL_ALT_TTL"])
+            if consul_cache:
+                consul_cache.set(cache_key, servers, params["CONSUL_TTL"])
+                consul_cache.set(alt_cache_key, servers, params["CONSUL_ALT_TTL"])
         except(requests.exceptions.ConnectionError):
             logging.warning("Cannot connect to Consul")
-            alt_cached = consul_cache.get(alt_cache_key)
-            if alt_cached:
-                return alt_cached
-            else:
-                servers = []
+            if consul_cache:
+                alt_cached = consul_cache.get(alt_cache_key)
+                if alt_cached:
+                    return alt_cached
+
+            servers = []
         return servers
 
 
@@ -45,6 +55,7 @@ def get_servers_list_from_consul(params):
 class BaseMemcachedCache(memcached.BaseMemcachedCache):
     def __init__(self, server, params, library, value_not_found_exception):
         server = get_servers(params)
+        print(server)
         memcached.BaseMemcachedCache.__init__(
             self, server, params, library, value_not_found_exception)
 
