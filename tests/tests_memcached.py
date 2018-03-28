@@ -1,5 +1,5 @@
 import unittest
-from django_consul_memcached import memcached
+from django_memcached_consul import memcached
 import os
 from httmock import response, all_requests, HTTMock
 
@@ -30,7 +30,7 @@ def get_file(filename):
 
 class TestAll(unittest.TestCase):
     def test_cache(self):
-        """Test it's possible to use memcached with consul."""
+        """Test that it's possible to use memcached with consul."""
         @all_requests
         def response_content(url, request):
             content = get_file("consul_api_health_mock_with_memcached.json")

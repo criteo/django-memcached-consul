@@ -38,14 +38,14 @@ _TESTS_REQUIREMENTS_TXT = _read_reqs("tests-requirements.txt")
 _TEST_REQUIRE = [l for l in _TESTS_REQUIREMENTS_TXT if "://" not in l]
 
 setup(
-    name="django_consul_memcached",
+    name="django_memcached_consul",
     version="0.1.0",
     maintainer="Criteo",
     maintainer_email="github@criteo.com",
     description="Django module that use consul to generate the list of memcached servers",
     long_description=_read("README.md"),
     license="Apache Software License",
-    keywords="django consul memcached",
+    keywords="django memcached consul",
     url="https://github.com/criteo/django-memcached-consul",
     packages=find_packages(),
     test_suite="tests",
