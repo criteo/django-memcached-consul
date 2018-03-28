@@ -13,8 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
-import setuptools
+from setuptools import find_packages, setup
 
+
+os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 def _read(relpath):
     fullpath = os.path.join(os.path.dirname(__file__), relpath)
@@ -32,9 +34,11 @@ def _read_reqs(relpath):
 _REQUIREMENTS_TXT = _read_reqs("requirements.txt")
 _DEPENDENCY_LINKS = [l for l in _REQUIREMENTS_TXT if "://" in l]
 _INSTALL_REQUIRES = [l for l in _REQUIREMENTS_TXT if "://" not in l]
+_TESTS_REQUIREMENTS_TXT = _read_reqs("tests-requirements.txt")
+_TEST_REQUIRE = [l for l in _TESTS_REQUIREMENTS_TXT if "://" not in l]
 
-setuptools.setup(
-    name="django-consul-memcached",
+setup(
+    name="django_consul_memcached",
     version="0.1.0",
     maintainer="Criteo",
     maintainer_email="github@criteo.com",
@@ -43,7 +47,9 @@ setuptools.setup(
     license="Apache Software License",
     keywords="django consul memcached",
     url="https://github.com/criteo/django-memcached-consul",
-    packages=['django-consul-memcached'],
+    packages=find_packages(),
+    test_suite="tests",
     install_requires=_INSTALL_REQUIRES,
     dependency_links=_DEPENDENCY_LINKS,
+    tests_require=_TEST_REQUIRE,
 )

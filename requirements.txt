@@ -1,1 +1,3 @@
 python-consul
+python-memcached
+django<2
