@@ -2,7 +2,7 @@ SECRET_KEY = 'test'
 
 CACHES = {
     'default': {
-        'BACKEND': 'django_consul_memcached.memcached.MemcachedCache',
+        'BACKEND': 'django_memcached_consul.memcached.MemcachedCache',
         'TIMEOUT': 60,
         'CONSUL_TTL': 60,
         # Alt cache will be used if consul is unreachable
