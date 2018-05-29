@@ -1,3 +1,5 @@
 python-consul
 python-memcached
 django<2
+
+prometheus_client
