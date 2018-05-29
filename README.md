@@ -32,7 +32,7 @@ should be preferably a filebased cache to be shared accross all workers.
 ```
 CACHES = {
     'default': {
-        'BACKEND': 'django-consul-memcached.memcached.MemcachedCache',
+        'BACKEND': 'django_memcached_consul.memcached.MemcachedCache',
         'TIMEOUT': 60,
         'CONSUL_TTL': 60,
         # Alt cache will be used if consul is unreachable
