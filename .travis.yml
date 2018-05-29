@@ -4,6 +4,8 @@ dist: trusty
 
 matrix:
   include:
+    - python: 'pypy'
+      env: TOXENV=pypy
     - python: 'pypy3'
       env: TOXENV=pypy3
     - python: '3.6'
