@@ -58,7 +58,7 @@ class BaseMemcachedCache(memcached.BaseMemcachedCache):
             self, server, params, library, value_not_found_exception)
 
 
-class MemcachedCache(memcached.MemcachedCache):
+class MemcachedCache(memcached.MemcachedCache, BaseMemcachedCache):
     def __init__(self, server, params):
         import memcache
         BaseMemcachedCache.__init__(
