@@ -44,6 +44,7 @@ setup(
     maintainer_email="github@criteo.com",
     description="Django module that use consul to generate the list of memcached servers",
     long_description=_read("README.md"),
+    long_description_content_type="text/markdown",
     license="Apache Software License",
     keywords="django memcached consul",
     url="https://github.com/criteo/django-memcached-consul",
