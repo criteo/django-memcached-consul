@@ -47,7 +47,7 @@ def get_servers_list_from_consul(params):
     consul_api = consul.Consul(host=params["CONSUL_HOST"], port=params["CONSUL_PORT"])
     index, data = consul_api.health.service(service=params["CONSUL_SERVICE"], passing=True)
     for node in data:
-        addr = node["Service"]["Address"] if "Address" in node["Service"] else node["Node"]["Address"]
+        addr = node["Service"]["Address"] if "Address" in node["Service"] and node["Service"]["Address"] else node["Node"]["Address"]
         servers.append("%s:%s" % (addr, node["Service"]["Port"]))
     return servers
 
