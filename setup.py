@@ -39,7 +39,7 @@ _TEST_REQUIRE = [l for l in _TESTS_REQUIREMENTS_TXT if "://" not in l]
 
 setup(
     name="django_memcached_consul",
-    version="0.1.2",
+    version="0.1.3",
     maintainer="Criteo",
     maintainer_email="github@criteo.com",
     description="Django module that use consul to generate the list of memcached servers",
