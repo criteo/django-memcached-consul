@@ -32,10 +32,6 @@ def _read_reqs(relpath):
 
 
 _REQUIREMENTS_TXT = _read_reqs("requirements.txt")
-_DEPENDENCY_LINKS = [l for l in _REQUIREMENTS_TXT if "://" in l]
-_INSTALL_REQUIRES = [l for l in _REQUIREMENTS_TXT if "://" not in l]
-_TESTS_REQUIREMENTS_TXT = _read_reqs("tests-requirements.txt")
-_TEST_REQUIRE = [l for l in _TESTS_REQUIREMENTS_TXT if "://" not in l]
 
 setup(
     name="django_memcached_consul",
@@ -50,7 +46,7 @@ setup(
     url="https://github.com/criteo/django-memcached-consul",
     packages=find_packages(),
     test_suite="tests",
-    install_requires=_INSTALL_REQUIRES,
-    dependency_links=_DEPENDENCY_LINKS,
-    tests_require=_TEST_REQUIRE,
+    install_requires=_REQUIREMENTS_TXT,
+    dependency_links=_REQUIREMENTS_TXT,
+    tests_require=_read_reqs("tests-requirements.txt"),
 )
