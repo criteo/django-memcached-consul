@@ -2,7 +2,7 @@
   {
     "Node": {
       "ID": "1234567",
-      "Node": "memcached-mock-node1"
+      "Address": "memcached-mock-node1"
     },
     "Service": {
       "ID": "memcached-mock-service",
@@ -14,7 +14,7 @@
   {
     "Node": {
       "ID": "1234567",
-      "Node": "memcached-mock-node2"
+      "Address": "memcached-mock-node2"
     },
     "Service": {
       "ID": "memcached-mock-service",

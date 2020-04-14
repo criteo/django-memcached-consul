@@ -15,7 +15,7 @@ CONSUL_HEADERS = {
 }
 PARAMS = {
     "CONSUL_HOST": "host",
-    "CONSUL_PORT": "123456",
+    "CONSUL_PORT": "1234",
     "CONSUL_SERVICE": "memcached_service",
 }
 

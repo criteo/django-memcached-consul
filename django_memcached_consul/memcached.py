@@ -11,7 +11,7 @@ def get_servers(params):
     """Get the list of cache servers either from cache or directly from Consul."""
     try:
         consul_cache = caches[params['CONSUL_CACHE']]
-    except(KeyError):
+    except KeyError:
         consul_cache = False
 
     cache_key = params["CONSUL_SERVICE"]
@@ -47,7 +47,11 @@ def get_servers_list_from_consul(params):
     consul_api = consul.Consul(host=params["CONSUL_HOST"], port=params["CONSUL_PORT"])
     index, data = consul_api.health.service(service=params["CONSUL_SERVICE"], passing=True)
     for node in data:
-        addr = node["Service"]["Address"] if "Address" in node["Service"] and node["Service"]["Address"] else node["Node"]["Address"]
+        addr = (
+            node["Service"]["Address"]
+            if "Address" in node["Service"] and node["Service"]["Address"]
+            else node["Node"]["Address"]
+        )
         servers.append("%s:%s" % (addr, node["Service"]["Port"]))
     return servers
 
