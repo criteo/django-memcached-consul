@@ -35,7 +35,7 @@ _REQUIREMENTS_TXT = _read_reqs("requirements.txt")
 
 setup(
     name="django_memcached_consul",
-    version="0.1.3",
+    version="0.2.0",
     maintainer="Criteo",
     maintainer_email="github@criteo.com",
     description="Django module that use consul to generate the list of memcached servers",
