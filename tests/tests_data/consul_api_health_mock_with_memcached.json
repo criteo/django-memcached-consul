@@ -2,11 +2,11 @@
   {
     "Node": {
       "ID": "1234567",
-      "Node": "localhost"
+      "Address": "localhost"
     },
     "Service": {
       "ID": "memcached-mock-service",
-      "Service": "memcached-mock",
+      "Node": "memcached-mock",
       "Port": 11211
     },
     "Checks": []
